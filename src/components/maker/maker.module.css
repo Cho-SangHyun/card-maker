@@ -1,0 +1,10 @@
+.maker{
+    background-color: gray;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.makerSection{
+    flex: 1;
+}

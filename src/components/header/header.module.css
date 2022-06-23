@@ -1,0 +1,21 @@
+.header{
+    background-color: powderblue;
+    text-align: center;
+    position: relative;
+}
+
+.headerTitle{
+    display: inline-block;
+}
+
+.logoutBtn{
+    position: absolute;
+    right: 3em;
+    top: 1em;
+    padding: 0.8em 1.6em;
+    border-radius: 1em;
+}
+
+.logoutBtn:hover{
+    cursor: pointer;
+}

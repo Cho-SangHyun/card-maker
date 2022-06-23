@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Footer from '../footer/footer';
 import Header from '../header/header';
+import styles from './maker.module.css';
 
 const Maker = ({authService}) => {
     const navigate = useNavigate();
@@ -20,10 +21,11 @@ const Maker = ({authService}) => {
     })
 
     return(
-        <section>
-            <Header />
-            <button onClick={onLogout}>Logout</button>
-            <h1>Maker</h1>
+        <section className={styles.maker}>
+            <Header onLogout={onLogout}/>
+            <div className={styles.makerSection}>
+                <h1>Maker</h1>
+            </div>
             <Footer />
         </section>
     )

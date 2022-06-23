@@ -3,6 +3,7 @@ import Header from '../header/header';
 import Footer from '../footer/footer';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import styles from './login.module.css';
 
 const Login = ({authService}) => {
   // react-router v6부터는 useNavigate사용
@@ -32,17 +33,19 @@ const Login = ({authService}) => {
   });
 
   return (
-    <section>
-      <Header />
-        <section>
-          <h1>Login</h1>
-          <ul>
-            <li><button onClick={onLogin}>Google</button></li>
-            <li><button onClick={onLogin}>Github</button></li>
-          </ul>
-        </section>
-      <Footer />
-    </section>
+    <div className={styles.login}>
+      <section className={styles.loginSection}>
+        <Header />
+          <section className={styles.loginMenu}>
+            <h1>Login</h1>
+            <ul>
+              <li><button onClick={onLogin}>Google</button></li>
+              <li><button onClick={onLogin}>Github</button></li>
+            </ul>
+          </section>
+        <Footer />
+      </section>
+    </div>
   )
 };
 
