@@ -1,4 +1,7 @@
+@value makerLightGrey from "../../common/colors.css";
+
 .editor{
     flex: 1;
-    background-color: bisque;
+    border-right: 0.5px solid makerLightGrey;
+    padding: 0.5em 2em;
 }
