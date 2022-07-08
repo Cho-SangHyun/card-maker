@@ -7,7 +7,7 @@ import styles from './maker.module.css';
 import Editor from '../editor/editor';
 import Preview from '../preview/preview';
 
-const Maker = ({authService}) => {
+const Maker = ({FileInput, authService}) => {
     const [cards, setCards] = useState({
         winterID: {
             id: "winterID",
@@ -83,6 +83,7 @@ const Maker = ({authService}) => {
                     createCard={createOrUpdateCard} 
                     deleteCard={deleteCard} 
                     updateCard={createOrUpdateCard}
+                    FileInput={FileInput}
                 />
                 <Preview cards={cards}/>
             </div>

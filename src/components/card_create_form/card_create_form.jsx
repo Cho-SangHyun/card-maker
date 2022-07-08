@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import styles from "./card_create_form.module.css";
 import Button from '../button/button';
-import ImageFileInput from '../image_file_input/image_file_input';
+import { useState } from 'react';
 
-const CardCreateForm = ({onCreate}) => {
+const CardCreateForm = ({FileInput, onCreate}) => {
     const formRef = useRef();
 	const nameRef = useRef();
     const companyRef = useRef();
@@ -11,6 +11,14 @@ const CardCreateForm = ({onCreate}) => {
     const emailRef = useRef();
     const messageRef = useRef();
     const themeRef = useRef();
+
+    const [file, setFile] = useState({fileName: null, fileURL: null});
+    const onFileChange = (file) => {
+        setFile({
+            fileName: file.name,
+            fileURL: file.url,
+        });
+    };
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -22,11 +30,15 @@ const CardCreateForm = ({onCreate}) => {
             email: emailRef.current.value || '',
             theme: themeRef.current.value,
             message: messageRef.current.value || '',
-            fileName: '',
-            fileURL: '',
+            fileName: file.fileName || '',
+            fileURL: file.fileURL || '',
         };
 
         formRef.current.reset();
+        setFile({
+            fileName: null,
+            fileURL: null
+        });
         onCreate(newCard);
     };
 	return(
@@ -42,7 +54,7 @@ const CardCreateForm = ({onCreate}) => {
 			<input ref={emailRef} className={styles.input} type="text" name="email" placeholder="Email" />
 			<textarea ref={messageRef} className={styles.textarea} name="message" placeholder="Message"></textarea>
 			<div className={styles.fileInput}>
-				<ImageFileInput />
+				<FileInput name={file.fileName} onFileChange={onFileChange}/>
 			</div>
 			<Button name="Create" onClick={onSubmit} />
 		</form>
