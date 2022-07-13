@@ -23,7 +23,7 @@ const CardCreateForm = ({FileInput, onCreate}) => {
     const onSubmit = (event) => {
         event.preventDefault();
         const newCard = {
-            id: Date.UTC(),
+            id: Date.now(),
             name: nameRef.current.value || '',
             company: companyRef.current.value || '',
             title: titleRef.current.value || '',

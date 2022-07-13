@@ -7,12 +7,15 @@ import {
 } from "react-router-dom";
 import Maker from './components/maker/maker';
 
-function App({FileInput, authService}) {
+function App({FileInput, authService, cardRepository}) {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login authService={authService}/>}/>
-        <Route path="/maker" element={<Maker authService={authService} FileInput={FileInput}/>}/>
+        <Route 
+          path="/maker" 
+          element={<Maker authService={authService} FileInput={FileInput} cardRepository={cardRepository}/>}
+        />
       </Routes>
       
     </BrowserRouter>

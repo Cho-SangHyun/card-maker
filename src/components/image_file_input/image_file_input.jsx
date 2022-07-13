@@ -14,7 +14,6 @@ const ImageFileInput = ({imageUploader, name, onFileChange}) => {
 
     const onChange = async (e) => {
         setLoading(true);
-        console.log("loading..");
         try{
             const uploaded = await imageUploader.upload(e.target.files[0]);
             onFileChange({
@@ -25,7 +24,6 @@ const ImageFileInput = ({imageUploader, name, onFileChange}) => {
             console.log(error);
         }finally{
             setLoading(false);
-            console.log("loading done");
         }
         
     };

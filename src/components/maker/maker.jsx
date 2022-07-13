@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Footer from '../footer/footer';
 import Header from '../header/header';
@@ -7,43 +7,11 @@ import styles from './maker.module.css';
 import Editor from '../editor/editor';
 import Preview from '../preview/preview';
 
-const Maker = ({FileInput, authService}) => {
-    const [cards, setCards] = useState({
-        winterID: {
-            id: "winterID",
-            name: "Winter",
-            company: "SM",
-            theme: "light",
-            title: "singer",
-            email: "winter@naver.com",
-            message: "I love U",
-            fileName: "winter",
-            fileURL: ""
-        },
-        karinaID: {
-            id: "karinaID",
-            name: "Karina",
-            company: "SM",
-            theme: "dark",
-            title: "dancer",
-            email: "Karina@naver.com",
-            message: "I love Me",
-            fileName: "karina",
-            fileURL: null
-        },
-        dahyunID: {
-            id: "dahyunID",
-            name: "Dahyun",
-            company: "JYP",
-            theme: "colorful",
-            title: "singer",
-            email: "dahyun@naver.com",
-            message: "I love U",
-            fileName: "dahyun",
-            fileURL: null
-        }
-    });
-    
+const Maker = ({FileInput, authService, cardRepository}) => {
+    const location = useLocation();
+    const [userId, setUserId] = useState(location.state && location.state.userId);
+    const [cards, setCards] = useState({});
+
     const navigate = useNavigate();
 
     const onLogout = () => {
@@ -51,12 +19,27 @@ const Maker = ({FileInput, authService}) => {
     }
 
     useEffect(() => {
+        if(!userId)
+            return;
+        const stopSync = cardRepository.syncCards(userId, (data) => {
+            setCards(data);
+        });
+
+        // useEffect에서 함수 리턴하면 리액트가 알아서 컴포넌트가 언마운트될때 리턴되는 함수를 호출.
+        // 리소스 정리, 메모리 정리 등이 가능하다!
+        return () => {stopSync();};
+    }, [userId]);
+
+    useEffect(() => {
         authService.onAuthChange(user => {
-            if(!user){
+            if(user){
+                setUserId(user.uid);
+            }
+            else{
                 navigate('/');
             }
-        })
-    })
+        });
+    });
 
     const deleteCard = (card) => {
         setCards(cards => {
@@ -64,6 +47,7 @@ const Maker = ({FileInput, authService}) => {
             delete updated[card.id];
             return updated;
         });
+        cardRepository.deleteCard(userId, card);
     };
 
     const createOrUpdateCard = (card) => {
@@ -72,6 +56,7 @@ const Maker = ({FileInput, authService}) => {
             updated[card.id] = card;
             return updated;
         });
+        cardRepository.saveCard(userId, card);
     }
 
     return(
