@@ -6,6 +6,7 @@ import Header from '../header/header';
 import styles from './maker.module.css';
 import Editor from '../editor/editor';
 import Preview from '../preview/preview';
+import { useCallback } from 'react';
 
 const Maker = ({FileInput, authService, cardRepository}) => {
     const location = useLocation();
@@ -14,9 +15,9 @@ const Maker = ({FileInput, authService, cardRepository}) => {
 
     const navigate = useNavigate();
 
-    const onLogout = () => {
+    const onLogout = useCallback(() => {
         authService.logout();
-    }
+    }, [authService]);
 
     useEffect(() => {
         if(!userId)
