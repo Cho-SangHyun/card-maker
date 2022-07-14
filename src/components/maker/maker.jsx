@@ -28,7 +28,7 @@ const Maker = ({FileInput, authService, cardRepository}) => {
         // useEffect에서 함수 리턴하면 리액트가 알아서 컴포넌트가 언마운트될때 리턴되는 함수를 호출.
         // 리소스 정리, 메모리 정리 등이 가능하다!
         return () => {stopSync();};
-    }, [userId]);
+    }, [userId, cardRepository]);
 
     useEffect(() => {
         authService.onAuthChange(user => {
@@ -39,7 +39,7 @@ const Maker = ({FileInput, authService, cardRepository}) => {
                 navigate('/');
             }
         });
-    });
+    }, [authService, navigate]);
 
     const deleteCard = (card) => {
         setCards(cards => {
